@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class LivroModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idLivro;
+    private Long idLivro;
     private String titulo;
     private String tema;
     private String autor;

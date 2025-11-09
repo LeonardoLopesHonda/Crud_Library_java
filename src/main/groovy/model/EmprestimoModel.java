@@ -5,8 +5,8 @@ import javax.persistence.*;
 public class EmprestimoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEmprestimo;
-    private int idUsuario;
+    private Long idEmprestimo;
+    private Long idUsuario;
     private String data_emprestimo;
     private String data_devolucao_prevista;
     private String data_devolucao;

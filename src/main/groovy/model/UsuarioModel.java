@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UsuarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private Long idUsuario;
     private String nome;
     private String sexo;
     private String numeroCelular;
