@@ -1,6 +1,6 @@
 package repository;
 
-import model.UsuarioModel;
+import model.LivroModel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,16 +8,16 @@ import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioRepository {
-    private static UsuarioRepository instance;
+public class LivroRepository {
+    private static LivroRepository instance;
     protected EntityManager entityManager;
 
-    public UsuarioRepository() {
+    public LivroRepository() {
         entityManager = getEntityManager();
     }
 
     private EntityManager getEntityManager() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuario");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("livro");
 
         if(entityManager == null) {
             entityManager = factory.createEntityManager();
@@ -26,18 +26,18 @@ public class UsuarioRepository {
         return entityManager;
     }
 
-    public static UsuarioRepository getInstance() {
+    public static LivroRepository getInstance() {
         if(instance == null) {
-            instance = new UsuarioRepository();
+            instance = new LivroRepository();
         }
 
         return instance;
     }
 
-    public String salvar(UsuarioModel usuario) {
+    public String salvar(LivroModel livro) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(usuario);
+            entityManager.persist(livro);
             entityManager.getTransaction().commit();
             return "Salvo com sucesso!";
         } catch (Exception e) {
@@ -47,10 +47,10 @@ public class UsuarioRepository {
         }
     }
 
-    public String editar(UsuarioModel usuario) {
+    public String editar(LivroModel livro) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(usuario);
+            entityManager.merge(livro);
             entityManager.getTransaction().commit();
             return "Editado com sucesso!";
         } catch (Exception e) {
@@ -60,10 +60,10 @@ public class UsuarioRepository {
         }
     }
 
-    public String remover(UsuarioModel usuario) {
+    public String remover(LivroModel livro) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.remove(usuario);
+            entityManager.remove(livro);
             entityManager.getTransaction().commit();
             return "Removido com sucesso!";
         } catch (Exception e) {
@@ -73,10 +73,10 @@ public class UsuarioRepository {
         }
     }
 
-    public List<UsuarioModel> buscarTodos() {
+    public List<LivroModel > buscarTodos() {
         try {
-            List<UsuarioModel> usuarios = entityManager.createQuery("from usuario").getResultList();
-            return usuarios;
+            List<LivroModel > livros = entityManager.createQuery("from LivroModel ").getResultList();
+            return livros;
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
@@ -84,25 +84,25 @@ public class UsuarioRepository {
         }
     }
 
-    public UsuarioModel buscarPorId(Long id) {
-        UsuarioModel usuario = new UsuarioModel();
+    public LivroModel buscarPorId(Long id) {
+        LivroModel livro = new LivroModel ();
         try {
-            usuario = entityManager.find(UsuarioModel.class, id);
+            livro = entityManager.find(LivroModel .class, id);
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
         }
-        return usuario;
+        return livro;
     }
 
-    public List<UsuarioModel> buscarPorNome(String nome) {
-        List<UsuarioModel> usuarios = new ArrayList<>();
+    public List<LivroModel > buscarPorNome(String nome) {
+        List<LivroModel > livros = new ArrayList<>();
         try {
-            usuarios = entityManager.createQuery("from usuario where nome like '%" + nome + "%'").getResultList();
+            livros = entityManager.createQuery("from LivroModel where titulo like '%" + nome + "%'").getResultList();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
         }
-        return usuarios;
+        return livros;
     }
 }
