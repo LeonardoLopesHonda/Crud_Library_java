@@ -75,7 +75,7 @@ public class UsuarioRepository {
 
     public List<UsuarioModel> buscarTodos() {
         try {
-            List<UsuarioModel> usuarios = entityManager.createQuery("from usuario").getResultList();
+            List<UsuarioModel> usuarios = entityManager.createQuery("from UsuarioModel ").getResultList();
             return usuarios;
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -98,7 +98,7 @@ public class UsuarioRepository {
     public List<UsuarioModel> buscarPorNome(String nome) {
         List<UsuarioModel> usuarios = new ArrayList<>();
         try {
-            usuarios = entityManager.createQuery("from usuario where nome like '%" + nome + "%'").getResultList();
+            usuarios = entityManager.createQuery("from UsuarioModel where nome like '%" + nome + "%'").getResultList();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
