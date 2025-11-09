@@ -17,7 +17,7 @@ public class LivroRepository {
     }
 
     private EntityManager getEntityManager() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("livro");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("crud_library");
 
         if(entityManager == null) {
             entityManager = factory.createEntityManager();
