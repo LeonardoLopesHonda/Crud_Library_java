@@ -20,6 +20,22 @@ public class EmprestimoModel {
         this.data_devolucao = data_devolucao;
     }
 
+    public Long getIdEmprestimo() {
+        return idEmprestimo;
+    }
+
+    public void setIdEmprestimo(Long idEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public String getData_emprestimo() {
         return data_emprestimo;
     }

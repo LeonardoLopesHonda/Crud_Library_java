@@ -27,6 +27,14 @@ public class LivroModel {
         this.quantidade_disponivel = quantidade_disponivel;
     }
 
+    public Long getIdLivro() {
+        return idLivro;
+    }
+
+    public void setIdLivro(Long idLivro) {
+        this.idLivro = idLivro;
+    }
+
     public String getTitulo() {
         return titulo;
     }
