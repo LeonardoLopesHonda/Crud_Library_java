@@ -2,14 +2,25 @@ package model;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "emprestimos")
 public class EmprestimoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmprestimo;
-    private Long idUsuario;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "idUsuario")
+    private UsuarioModel idUsuario;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "idLivro")
+    private LivroModel idLivro;
+
     private String data_emprestimo;
     private String data_devolucao_prevista;
     private String data_devolucao;
+    private boolean expirado;
 
     public EmprestimoModel() {
     }
@@ -28,12 +39,20 @@ public class EmprestimoModel {
         this.idEmprestimo = idEmprestimo;
     }
 
-    public Long getIdUsuario() {
+    public UsuarioModel getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
+    public void setIdUsuario(UsuarioModel idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public LivroModel getIdLivro() {
+        return idLivro;
+    }
+
+    public void setIdLivro(LivroModel idLivro) {
+        this.idLivro = idLivro;
     }
 
     public String getData_emprestimo() {
@@ -58,5 +77,13 @@ public class EmprestimoModel {
 
     public void setData_devolucao(String data_devolucao) {
         this.data_devolucao = data_devolucao;
+    }
+
+    public boolean isExpirado() {
+        return expirado;
+    }
+
+    public void setExpirado(boolean expirado) {
+        this.expirado = expirado;
     }
 }
