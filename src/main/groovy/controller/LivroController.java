@@ -10,7 +10,11 @@ public class LivroController {
     private LivroRepository livroRepository = new LivroRepository();
 
     public String salvar(LivroModel livro) throws SQLException {
-        return livroRepository.salvar(livro);
+        if(livro.getIdLivro() == null) {
+            return livroRepository.salvar(livro);
+        } else {
+            return livroRepository.editar(livro);
+        }
     }
 
     public String editar(LivroModel livro) throws SQLException {

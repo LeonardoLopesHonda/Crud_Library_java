@@ -95,10 +95,10 @@ public class LivroRepository {
         return livro;
     }
 
-    public List<LivroModel > buscarPorNome(String nome) {
+    public List<LivroModel > buscarPorTitulo(String titulo) {
         List<LivroModel > livros = new ArrayList<>();
         try {
-            livros = entityManager.createQuery("from LivroModel where titulo like '%" + nome + "%'").getResultList();
+            livros = entityManager.createQuery("from LivroModel where titulo like '%" + titulo + "%'").getResultList();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();

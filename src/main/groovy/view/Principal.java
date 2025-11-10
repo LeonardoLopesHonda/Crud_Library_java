@@ -1,6 +1,15 @@
 package view;
 
+import view.Livro.BuscarLivro;
+import view.Livro.CadastroLivro;
+import view.Livro.EditarLivro;
+import view.Usuario.BuscarUsuario;
+import view.Usuario.CadastroUsuario;
+import view.Usuario.EditarUsuario;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Principal extends JFrame{
     private JPanel panel1;
@@ -19,20 +28,58 @@ public class Principal extends JFrame{
         this.setJMenuBar(menu);
         JMenu livro = new JMenu("Livro");
         JMenuItem livro_adicionar = new JMenuItem("Adicionar");
-        JMenuItem livro_editar = new JMenuItem("Editar");
+        JMenuItem livro_buscar = new JMenuItem("Buscar");
         JMenuItem livro_remove = new JMenuItem("Remover");
         livro.add(livro_adicionar);
-        livro.add(livro_editar);
+        livro.add(livro_buscar);
         livro.add(livro_remove);
         JMenu usuario = new JMenu("Usuário");
         JMenuItem usuario_adicionar = new JMenuItem("Adicionar");
-        JMenuItem usuario_editar = new JMenuItem("Editar");
+        JMenuItem usuario_buscar = new JMenuItem("Buscar");
         JMenuItem usuario_remove = new JMenuItem("Remover");
         usuario.add(usuario_adicionar);
-        usuario.add(usuario_editar);
+        usuario.add(usuario_buscar);
         usuario.add(usuario_remove);
 
-        menu.add(livro);
         menu.add(usuario);
+        menu.add(livro);
+
+        usuario_adicionar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CadastroUsuario cadastro = new CadastroUsuario();
+            }
+        });
+        usuario_buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuscarUsuario editar = new BuscarUsuario();
+            }
+        });
+        usuario_remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuscarUsuario buscar = new BuscarUsuario();
+            }
+        });
+
+        livro_adicionar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CadastroLivro cadastro = new CadastroLivro();
+            }
+        });
+        livro_buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuscarLivro editar = new BuscarLivro();
+            }
+        });
+        livro_remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuscarLivro buscar = new BuscarLivro();
+            }
+        });
     }
 }
