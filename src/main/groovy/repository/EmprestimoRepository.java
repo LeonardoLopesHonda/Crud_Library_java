@@ -1,10 +1,14 @@
 package repository;
 
+import controller.UsuarioController;
 import model.EmprestimoModel;
+import model.LivroModel;
+import model.UsuarioModel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,14 +100,14 @@ public class EmprestimoRepository {
     }
 
     public Long contarEmprestimosAtivosPorUsuario(Long idUsuario) {
-        try {
-            return entityManager.createQuery("SELECT COUNT(emprestimo) FROM  EmprestimoModel emprestimo WHERE emprestimo.idUsuario = :idUsuario", Long.class).setParameter("idUsuario", idUsuario).getSingleResult();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            e.printStackTrace();
-            return 0L;
-        }
+        return entityManager.createQuery(
+                        "SELECT COUNT(e) FROM EmprestimoModel e WHERE e.idUsuario.id = :idUsuario AND e.data_devolucao IS NULL",
+                        Long.class
+                )
+                .setParameter("idUsuario", idUsuario)
+                .getSingleResult();
     }
+
 
     public boolean livroJaEsmprestado(Long idLivro) {
         try {
@@ -113,6 +117,21 @@ public class EmprestimoRepository {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public List<EmprestimoModel> buscarEmprestimosAtivosPorUsuario(Long idUsuario) {
+        try {
+            UsuarioController usuarioController = new UsuarioController();
+            UsuarioModel usuario = usuarioController.buscarPorId(idUsuario);
+            return entityManager.createQuery(
+                            "FROM EmprestimoModel e WHERE e.idUsuario = :idUsuario AND e.data_devolucao IS NULL",
+                            EmprestimoModel.class)
+                    .setParameter("idUsuario", usuario)
+                    .getResultList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

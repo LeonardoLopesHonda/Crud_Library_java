@@ -29,4 +29,8 @@ public class LivroController {
     public List<LivroModel> listar() throws SQLException {
         return livroRepository.buscarTodos();
     }
+
+    public List<LivroModel> buscarDisponiveis() throws SQLException {
+        return livroRepository.buscarLivrosDisponiveis();
+    }
 }

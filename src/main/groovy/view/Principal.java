@@ -40,10 +40,20 @@ public class Principal extends JFrame{
         usuario.add(usuario_adicionar);
         usuario.add(usuario_buscar);
         usuario.add(usuario_remove);
+        JMenu emprestimo = new JMenu("Empréstimos");
+        JMenuItem emprestimo_emprestar = new JMenuItem("Emprestar/Devolver");
+        emprestimo.add(emprestimo_emprestar);
 
+        menu.add(emprestimo);
         menu.add(usuario);
         menu.add(livro);
 
+        emprestimo_emprestar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.Emprestimo.BuscarUsuario buscar = new view.Emprestimo.BuscarUsuario();
+            }
+        });
         usuario_adicionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -84,6 +84,7 @@ public class BuscarLivro extends JFrame {
         private LivroRepository livroRepository = new LivroRepository();
         private final String[] COLUMNS = new String[] {"Id", "Titulo", "Tema", "Autor", "ISBN", "Data de Publicação", "Quantidade"};
         private List<LivroModel> livros;
+
         public LivroDeTabela() {
             livros = livroRepository.buscarTodos();
         }

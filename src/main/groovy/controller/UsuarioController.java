@@ -25,4 +25,8 @@ public class UsuarioController {
     public List<UsuarioModel> listar() throws SQLException {
         return usuarioRepository.buscarTodos();
     }
+
+    public UsuarioModel buscarPorId(Long idUsuario) throws SQLException {
+        return usuarioRepository.buscarPorId(idUsuario);
+    }
 }

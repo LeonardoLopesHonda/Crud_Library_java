@@ -2,12 +2,15 @@ package controller;
 
 import model.EmprestimoModel;
 import model.LivroModel;
+import model.MultaModel;
 import model.UsuarioModel;
 import repository.EmprestimoRepository;
 import repository.LivroRepository;
+import repository.MultaRepository;
 import repository.UsuarioRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class EmprestimoController {
     private EmprestimoRepository emprestimoRepository;
@@ -37,6 +40,20 @@ public class EmprestimoController {
             return "O livro não tem exemplares em estoque.";
         }
 
+        MultaRepository multaRepository = new MultaRepository();
+        List<MultaModel> multas = multaRepository.buscarMultasAtivasPorUsuario(idUsuario);
+        if(!multas.isEmpty()) {
+            MultaModel multa = multas.get(0);
+            LocalDate fim_multa = LocalDate.parse(multa.getData_fim_multa());
+            LocalDate hoje = LocalDate.now();
+            if(hoje.isBefore(fim_multa)) {
+                return "Usuário banido até " + fim_multa;
+            } else {
+                multa.setBanido(true);
+                multaRepository.editar(multa);
+            }
+        }
+
         EmprestimoModel emprestimo = new EmprestimoModel();
         emprestimo.setIdUsuario(usuario);
         emprestimo.setIdLivro(livro);
@@ -62,8 +79,11 @@ public class EmprestimoController {
             return "O livro já foi devolvido!";
         }
 
-        emprestimo.setData_devolucao(LocalDate.now().toString());
-        emprestimo.setExpirado(LocalDate.now().isAfter(LocalDate.parse(emprestimo.getData_devolucao_prevista())));
+        var hoje = LocalDate.now();
+        LocalDate prevista = LocalDate.parse(emprestimo.getData_devolucao_prevista());
+
+        emprestimo.setData_devolucao(hoje.toString());
+        emprestimo.setExpirado(hoje.isAfter(LocalDate.parse(emprestimo.getData_devolucao_prevista())));
 
         emprestimoRepository.editar(emprestimo);
 
@@ -71,6 +91,21 @@ public class EmprestimoController {
         livro.setQuantidade_disponivel(livro.getQuantidade_disponivel() + 1);
         livroRepository.editar(livro);
 
+        if (hoje.isAfter(prevista)) {
+            aplicarMulta(emprestimo.getIdUsuario());
+            return "Livro devolvido com sucesso, mas o usuario foi BANIDO por atraso :)";
+        }
+
         return "Livro devolvido com sucesso!";
+    }
+
+    private void aplicarMulta(UsuarioModel usuario) {
+        MultaModel multa =  new MultaModel(usuario, true, LocalDate.now().toString(), LocalDate.now().plusDays(7).toString());
+        MultaRepository multaRepository = new MultaRepository();
+        try {
+            multaRepository.salvar(multa);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

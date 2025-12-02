@@ -1,3 +1,4 @@
+import repository.EmprestimoRepository;
 import view.Principal;
 
 public class Main {

@@ -73,9 +73,9 @@ public class LivroRepository {
         }
     }
 
-    public List<LivroModel > buscarTodos() {
+    public List<LivroModel> buscarTodos() {
         try {
-            List<LivroModel > livros = entityManager.createQuery("from LivroModel ").getResultList();
+            List<LivroModel> livros = entityManager.createQuery("from LivroModel ").getResultList();
             return livros;
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -95,10 +95,21 @@ public class LivroRepository {
         return livro;
     }
 
-    public List<LivroModel > buscarPorTitulo(String titulo) {
-        List<LivroModel > livros = new ArrayList<>();
+    public List<LivroModel> buscarPorTitulo(String titulo) {
+        List<LivroModel> livros = new ArrayList<>();
         try {
             livros = entityManager.createQuery("from LivroModel where titulo like '%" + titulo + "%'").getResultList();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            e.printStackTrace();
+        }
+        return livros;
+    }
+
+    public List<LivroModel> buscarLivrosDisponiveis() {
+        List<LivroModel> livros = new ArrayList<>();
+        try {
+            livros = entityManager.createQuery("FROM LivroModel l WHERE l.quantidade_disponivel > 0", LivroModel.class).getResultList();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
